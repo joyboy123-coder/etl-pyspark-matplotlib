@@ -1,0 +1,11 @@
+# PySpark for large-scale data processing (ETL tasks)
+pyspark==3.3.1
+
+# pandas for data manipulation and cleaning, though PySpark will handle most of the ETL
+pandas==1.5.3
+
+# matplotlib for data visualization
+matplotlib==3.6.2
+
+# numpy for numerical operations (useful in transformation steps)
+numpy==1.23.3
