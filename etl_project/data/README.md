@@ -13,7 +13,7 @@ The transformation process includes:
 - Rounding off numerical columns to a standard format.
 - Performing other necessary data cleaning steps to prepare the data for analysis.
 
-### Example: Before vs After Transformation
+### Example: Before vs After Transformation (Picking an example table)
 
 #### **Before (Raw Data)**
 
@@ -35,10 +35,6 @@ The transformation process includes:
 | Michael P   | Scientist    | 45000   | 2019-07-30   |
 | Sarah Wong  | Engineer     | 57000   | 2020-10-12   |
 
-In the cleaned data:
-- Missing `Salary` values have been replaced with the mean salary for that department.
-- Missing `Joining Date` values have been filled with a default date or handled in another way.
-- Data formatting has been standardized, and the data is now ready for analysis.
 
 ## 🔧 How the Code Works
 
