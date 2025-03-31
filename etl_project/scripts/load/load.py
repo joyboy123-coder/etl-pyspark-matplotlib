@@ -65,4 +65,3 @@ try:
 
 except Exception as e:
     logging.error(f"Error loading into Snowflake: {e}")
-    print(f"❌ Error: {e}")
