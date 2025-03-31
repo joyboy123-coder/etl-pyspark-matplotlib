@@ -18,16 +18,12 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-def extract(file_path):
-    try:
-        df = spark.read.option('header',True).csv(file_path)
-        logging.info(f'Succesfully extracted from {file_path}')
-        return df
-    except Exception as e:
-        logging.warning(f'Error Extracting data from {file_path}')
-        return None
-    
 
-if __name__ == '__main__':
-    file_path = input('Enter your file path: ')
-    data = extract(file_path)
+file_path = input("Enter your file path for raw data: ")
+
+try:
+    df = spark.read.csv(file_path, header=True, inferSchema=True)
+    logging.info(f"Successfully extracted data from {file_path}")
+    df.show(5)  # Show first 5 rows
+except Exception as e:
+    logging.warning(f"Error extracting data from {file_path}: {e}")
