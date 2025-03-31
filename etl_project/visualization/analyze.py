@@ -28,4 +28,5 @@ plt.ylabel("Total Salary", fontsize=12)
 plt.title("Total Salary by Department (Only Departments with Count > 1000)", fontsize=14)
 
 plt.xticks(rotation=45)  # Rotate x labels for better readability
+plt.savefig("salary_distribution.png", dpi=300, bbox_inches="tight")
 plt.show()
