@@ -45,8 +45,9 @@ The cleaned data is then saved as a CSV file using **Pandas**.
 - Replaces the email domain with a **random domain** (`@gmail.com`, `@yahoo.com`, or `@hotmail.com`).  
 
 ### 📌 5. Convert to Pandas and Save  
-- The cleaned **PySpark DataFrame** is converted into a **Pandas DataFrame**.  
-- The transformed data is saved as a CSV file in the output directory.  
+- The cleaned **PySpark DataFrame** is converted into a **Pandas DataFrame** using `.toPandas()`.  
+- The transformed data is saved as a CSV file in the **data/cleaned_data** folder.  
+- The **raw data is stored in the `data/raw_data` folder**, and the cleaned data is saved in `data/cleaned_data/cleaned_data.csv`.  
 
 ### 📌 6. Error Handling  
 - If an error occurs, it is logged in `etl_log.log`, and an error message is displayed.  
