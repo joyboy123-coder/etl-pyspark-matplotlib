@@ -38,16 +38,26 @@ try:
     pandas_df = df.toPandas()
 
 
+    print("Please enter your Snowflake credentials:")
+
+    user = input("Snowflake Username: ")
+    password = input("Snowflake Password: ")
+    account = input("Snowflake Account: ")
+    warehouse = input("Snowflake Warehouse: ")
+    database = input("Snowflake Database: ")
+    schema = input("Snowflake Schema: ")
+
+    # ✅ Step 5: Connect to Snowflake using the provided credentials
     conn = snowflake.connector.connect(
-       user="YOUR_USER_NAME",
-       password="YOUR_PASSWORD",
-       account="YOUR_ACCOUNT",
-       warehouse="YOUR_WAREHOUSE",
-       database="YOUR_DATABASE",
-       schema="YOUR_SCHEMA")
+       user=user,
+       password=password,
+       account=account,
+       warehouse=warehouse,
+       database=database,
+       schema=schema)
     
     # ✅ Step 6: Load DataFrame into Snowflake
-    table_name = "PEOPLE"
+    table_name = input("Enter your table name: ")
 
     # Write to Snowflake using Pandas
     write_pandas(conn, pandas_df, table_name=table_name, auto_create_table=True)
