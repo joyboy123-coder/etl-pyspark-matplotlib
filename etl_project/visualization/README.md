@@ -29,8 +29,8 @@ This project is focused on analyzing salary distribution across different depart
 
 ## 🏃 How to Run the Code
 
-1. Clone the repository or download the project files.
-2. Install the required dependencies by running:
+   Run the script analyze.py to generate the chart:
+
    ```bash
    python analyze.py
 
