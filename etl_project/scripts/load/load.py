@@ -5,7 +5,7 @@ import logging
 import os
 import snowflake.connector
 from snowflake.connector.pandas_tools import write_pandas
-
+from pathlib import Path
 
 # ✅ Step 1: Initialize Spark Session
 spark = SparkSession.builder.appName("PySpark_Snowflake").getOrCreate()
@@ -23,14 +23,21 @@ logging.basicConfig(
 
 try:
     # ✅ Step 3: Read cleaned data into Spark DataFrame
-    cleaned_data = r"C:\Users\yamin\OneDrive\etl-pyspark-matplotlib\etl_project\data\cleaned_data\cleaned_data.csv"
-    df = spark.read.csv(cleaned_data, header=True, inferSchema=True)
+    # Use relative path to dynamically get the correct file path based on script location
+    project_root = Path(__file__).resolve().parents[2]  # Move up two levels to reach the project root
+    cleaned_data = project_root / "data" / "cleaned_data" / "cleaned_data.csv"  # Build the relative path
+
+    # Convert path to string (needed for Spark to read)
+    cleaned_data_path_str = str(cleaned_data)
+
+    # Read the CSV file
+    df = spark.read.csv(cleaned_data_path_str, header=True, inferSchema=True)
     logging.info("Successfully loaded cleaned data into Spark DataFrame.")
 
-    #Change pyspark to pandas for loading data
+    # Change PySpark DataFrame to Pandas DataFrame
     pandas_df = df.toPandas()
 
-    # Snowflake Connection Details
+
     conn = snowflake.connector.connect(
        user="YOUR_USER_NAME",
        password="YOUR_PASSWORD",
@@ -40,15 +47,12 @@ try:
        schema="YOUR_SCHEMA")
     
     # ✅ Step 6: Load DataFrame into Snowflake
-
     table_name = "PEOPLE"
 
-
-    write_pandas(conn,pandas_df,table_name = table_name ,auto_create_table =True)
+    # Write to Snowflake using Pandas
+    write_pandas(conn, pandas_df, table_name=table_name, auto_create_table=True)
     logging.info("Data successfully loaded into Snowflake.")
 
 except Exception as e:
     logging.error(f"Error loading into Snowflake: {e}")
     print(f"❌ Error: {e}")
-
-
