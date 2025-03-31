@@ -1,27 +1,68 @@
-import pandas as pd
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, trim, initcap, when, regexp_replace, lower, split, avg, expr,concat,lit
+from pyspark.sql.functions import concat_ws
+import random
+import logging
 import os
 
-df = pd.read_csv(r"C:\Users\yamin\Downloads\realistic_messy_dataset_100k.csv")
+
+spark = SparkSession.builder.appName('ETL Pipeline').getOrCreate()
 
 
-# Get the absolute path of the project root
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+# Set the correct logs directory at the project root
+log_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "logs"))
+os.makedirs(log_dir, exist_ok=True)
 
-# Define correct paths
-data_folder = os.path.join(PROJECT_ROOT, "data")
-cleaned_data_folder = os.path.join(data_folder, "cleaned_data")
+# Configure logging
+log_file_path = os.path.join(log_dir, "etl_log.log")
+logging.basicConfig(
+    filename=log_file_path,
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
-# Ensure the cleaned_data directory exists in the project root
-os.makedirs(cleaned_data_folder, exist_ok=True)
-df['Name'] = df['Name'].str.title().str.strip()
-df['Email'] = df['Email'].str.replace(' ','')
-df['Email'] = df['Email'].apply(lambda x: x + '.com' if x.endswith('o') or x.endswith('l') else x)
-df['Department'] = df['Department'].str.title().str.strip()
-df['City'] = df['City'].str.title().str.strip()
-df['Salary'] = pd.to_numeric(df['Salary'],errors='coerce')
-df['Salary'] = df['Salary'].fillna(df['Salary'].mean())
-df['Salary'] = df['Salary'].round(2)
 
-# Save the cleaned CSV in the correct directory
-cleaned_data_path = os.path.join(cleaned_data_folder, "cleaned_data.csv")
-df.to_csv(cleaned_data_path, index=False)
+file_path = input("Enter your file path for raw data: ")
+
+try:
+    df = spark.read.csv(file_path,header = True,inferSchema = True)
+    logging.info('Succesfully data extracted for transformations ')
+
+    # Convert ID to integer
+    logging.info("Converting ID column to integer...")
+    df = df.withColumn("ID", col("ID").cast("int"))
+
+    # Clean Name column
+    logging.info("Cleaning Name column...")
+    df = df.withColumn("Name", initcap(trim(col("Name"))))
+
+    # Clean Department column
+    logging.info("Cleaning Department column...")
+    df = df.withColumn("Department", initcap(trim(col("Department"))))
+    df = df.withColumn("Department", when(col("Department").contains("/"), split(col("Department"), "/").getItem(1)).otherwise(col("Department")))
+    df = df.withColumn("Department", when(col("Department").contains(","), split(col("Department"), ",").getItem(0)).otherwise(col("Department")))
+
+    # Clean City column
+    logging.info("Cleaning City column...")
+    df = df.withColumn("City", initcap(trim(col("City"))))
+
+    # Convert Salary to numeric and fill nulls with mean
+    logging.info("Handling Salary column...")
+    salary_mean = df.select(avg(col("Salary"))).collect()[0][0]
+    df = df.withColumn("Salary", when(col("Salary").isNull(), salary_mean).otherwise(col("Salary")))
+    df = df.withColumn("Salary", col("Salary").cast("double"))
+
+    # Clean Email column
+    logging.info("Cleaning Email column...")
+    df = df.withColumn("Email", lower(trim(col("Email"))))
+    df = df.withColumn("Email", regexp_replace(col("Email"), " ", ""))
+
+    domains = ["@gmail.com", "@yahoo.com", "@hotmail.com"]
+    random_domain = random.choice(domains)  # Select a random domain
+    df = df.withColumn("Email", concat_ws("", split(col("Email"), "@").getItem(0), lit(random_domain)))
+
+    logging.info("Transformation completed!")
+    df.show(5)
+
+except Exception as e:
+    logging.warning(f"Error transforming data: {e}")
