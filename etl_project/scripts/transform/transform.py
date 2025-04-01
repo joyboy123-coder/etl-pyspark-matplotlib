@@ -65,8 +65,6 @@ try:
     
     # Define output path
     output_path = os.path.join("data", "cleaned_data", "cleaned_data.csv")
-
-    #C:\Users\yamin\OneDrive\etl-pyspark-matplotlib\etl_project\data\raw_data\realistic_messy_dataset_100k.csv Save as CSV using Pandas
     pandas_df.to_csv(output_path, index=False)
     logging.info("Data successfully saved as CSV using Pandas.")
 except Exception as e:
