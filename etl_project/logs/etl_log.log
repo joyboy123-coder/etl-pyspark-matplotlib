@@ -23,3 +23,8 @@
 2025-04-01 19:11:54,308 - INFO - Transformation completed successfully.
 2025-04-01 19:11:58,854 - INFO - Data successfully saved as CSV using Pandas.
 2025-04-01 19:11:58,894 - INFO - Closing down clientserver connection
+2025-04-01 19:26:12,868 - INFO - Successfully extracted data for transformation.
+2025-04-01 19:26:12,868 - INFO - Starting data transformations...
+2025-04-01 19:26:13,168 - INFO - Transformation completed successfully.
+2025-04-01 19:33:05,193 - INFO - Data successfully saved as CSV using Pandas.
+2025-04-01 19:33:05,253 - INFO - Closing down clientserver connection
