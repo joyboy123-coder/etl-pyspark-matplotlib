@@ -7,10 +7,10 @@ import snowflake.connector
 from snowflake.connector.pandas_tools import write_pandas
 from pathlib import Path
 
-# ✅ Step 1: Initialize Spark Session
+# Initialize Spark Session
 spark = SparkSession.builder.appName("PySpark_Snowflake").getOrCreate()
 
-# ✅ Step 2: Set up logging
+# Set up logging
 log_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "logs"))
 os.makedirs(log_dir, exist_ok=True)
 
@@ -41,7 +41,7 @@ try:
     database = input("Snowflake Database: ")
     schema = input("Snowflake Schema: ")
 
-    # ✅ Step 5: Connect to Snowflake using the provided credentials
+    # Connect to Snowflake using the provided credentials
     conn = snowflake.connector.connect(
        user=user,
        password=password,
@@ -50,7 +50,7 @@ try:
        database=database,
        schema=schema)
     
-    # ✅ Step 6: Load DataFrame into Snowflake
+    # Load DataFrame into Snowflake
     table_name = input("Enter your table name: ")
 
     # Write to Snowflake using Pandas
