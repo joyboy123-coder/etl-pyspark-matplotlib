@@ -46,10 +46,9 @@ try:
     # Clean City column
     df = df.withColumn("City", initcap(trim(col("City"))))
 
-    # Convert Salary to numeric and fill nulls with mean
-    salary_mean = df.select(avg(col("Salary"))).collect()[0][0]
-    df = df.withColumn("Salary", when(col("Salary").isNull(), salary_mean).otherwise(col("Salary")))
-    df = df.withColumn("Salary", col("Salary").cast("double"))
+    df = df.withColumn("Salary", when(col("Salary").isNull(), lit(50000)).otherwise(col("Salary")))
+    df = df.withColumn("Salary", regexp_replace(col("Salary"), "[^0-9.]", "").cast("double"))
+   
 
     # Clean Email column
     df = df.withColumn("Email", lower(trim(col("Email"))))
@@ -63,14 +62,16 @@ try:
     logging.info("Transformation completed successfully.")
 
     pandas_df = df.toPandas()
-
+    
     # Define output path
-    output_path = r"C:\Users\yamin\OneDrive\etl-pyspark-matplotlib\etl_project\data\cleaned_data\cleaned_data.csv"
+    output_path = os.path.join("data", "cleaned_data", "cleaned_data.csv")
 
-    # Save as CSV using Pandas
+    #C:\Users\yamin\OneDrive\etl-pyspark-matplotlib\etl_project\data\raw_data\realistic_messy_dataset_100k.csv Save as CSV using Pandas
     pandas_df.to_csv(output_path, index=False)
-
     logging.info("Data successfully saved as CSV using Pandas.")
 except Exception as e:
     logging.error(f"Error transforming data: {e}")
     print(f"❌ Error: {e}")
+
+
+print(pandas_df[pandas_df["Salary"].isna()])
