@@ -1,0 +1,10 @@
+2025-04-01 18:57:06,596 - INFO - Successfully extracted data for transformation.
+2025-04-01 18:57:06,597 - INFO - Starting data transformations...
+2025-04-01 18:57:06,871 - INFO - Transformation completed successfully.
+2025-04-01 18:57:09,201 - ERROR - Error transforming data: Cannot save file into a non-existent directory: 'data\cleaned_data'
+2025-04-01 18:57:09,256 - INFO - Closing down clientserver connection
+2025-04-01 19:05:34,115 - INFO - Successfully extracted data for transformation.
+2025-04-01 19:05:34,115 - INFO - Starting data transformations...
+2025-04-01 19:05:34,407 - INFO - Transformation completed successfully.
+2025-04-01 19:05:37,137 - INFO - Data successfully saved as CSV using Pandas.
+2025-04-01 19:05:37,171 - INFO - Closing down clientserver connection
