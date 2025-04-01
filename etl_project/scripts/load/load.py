@@ -22,16 +22,10 @@ logging.basicConfig(
 )
 
 try:
-    # ✅ Step 3: Read cleaned data into Spark DataFrame
-    # Use relative path to dynamically get the correct file path based on script location
-    project_root = Path(__file__).resolve().parents[2]  # Move up two levels to reach the project root
-    cleaned_data = project_root / "data" / "cleaned_data" / "cleaned_data.csv"  # Build the relative path
-
-    # Convert path to string (needed for Spark to read)
-    cleaned_data_path_str = str(cleaned_data)
+    cleaned_data_path = input("Enter the file path for 'cleaned_data.csv': ")
 
     # Read the CSV file
-    df = spark.read.csv(cleaned_data_path_str, header=True, inferSchema=True)
+    df = spark.read.csv(cleaned_data_path, header=True, inferSchema=True)
     logging.info("Successfully loaded cleaned data into Spark DataFrame.")
 
     # Change PySpark DataFrame to Pandas DataFrame
