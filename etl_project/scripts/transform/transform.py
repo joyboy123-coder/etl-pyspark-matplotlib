@@ -63,8 +63,17 @@ try:
 
     pandas_df = df.toPandas()
     
-    # Define output path
-    output_path = os.path.join("data", "cleaned_data", "cleaned_data.csv")
+    # Get the absolute path of the script's directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Define the correct output path inside the project root
+    output_dir = os.path.join(script_dir, "data", "cleaned_data")
+    output_path = os.path.join(output_dir, "cleaned_data.csv")
+
+    # Ensure 'cleaned_data' folder exists
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Save the DataFrame as CSV
     pandas_df.to_csv(output_path, index=False)
     logging.info("Data successfully saved as CSV using Pandas.")
 except Exception as e:

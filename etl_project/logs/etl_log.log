@@ -8,3 +8,18 @@
 2025-04-01 19:05:34,407 - INFO - Transformation completed successfully.
 2025-04-01 19:05:37,137 - INFO - Data successfully saved as CSV using Pandas.
 2025-04-01 19:05:37,171 - INFO - Closing down clientserver connection
+2025-04-01 19:08:50,277 - INFO - Successfully extracted data for transformation.
+2025-04-01 19:08:50,278 - INFO - Starting data transformations...
+2025-04-01 19:08:50,549 - INFO - Transformation completed successfully.
+2025-04-01 19:08:52,662 - ERROR - Error transforming data: [WinError 3] The system cannot find the path specified: 'data\\cleaned_data'
+2025-04-01 19:08:52,703 - INFO - Closing down clientserver connection
+2025-04-01 19:11:10,969 - INFO - Successfully extracted data for transformation.
+2025-04-01 19:11:10,969 - INFO - Starting data transformations...
+2025-04-01 19:11:11,270 - INFO - Transformation completed successfully.
+2025-04-01 19:11:13,816 - INFO - Data successfully saved as CSV using Pandas.
+2025-04-01 19:11:13,849 - INFO - Closing down clientserver connection
+2025-04-01 19:11:53,887 - INFO - Successfully extracted data for transformation.
+2025-04-01 19:11:53,887 - INFO - Starting data transformations...
+2025-04-01 19:11:54,308 - INFO - Transformation completed successfully.
+2025-04-01 19:11:58,854 - INFO - Data successfully saved as CSV using Pandas.
+2025-04-01 19:11:58,894 - INFO - Closing down clientserver connection
